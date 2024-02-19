@@ -13,7 +13,6 @@ FROM XXX
 ENV REDIS_DATA=/data
 WORKDIR	$REDIS_DATA 
 RUN XXX \
-	&& XXX \
 	&& chown redis:redis $REDIS_DATA
 USER XXX
 EXPOSE XXX
