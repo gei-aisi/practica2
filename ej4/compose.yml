@@ -1,8 +1,12 @@
 services:
-  XXX:
+  redis:
     image: XXX
+    volumes:
+        - type: XXX
+          source: XXX
+          target: XXX
 
-  XXX:
+  webapp:
     image: XXX
     volumes:
         - type: XXX
@@ -11,9 +15,13 @@ services:
     ports:
         - "XXX:XXX"
     links:
-        - "XXX"
+        - "XXX:XXX"
     healthcheck:
-        test: ["CMD", "curl", "--fail", "XXX"]
+        test: ["CMD", "curl", "--fail", "http://127.0.0.1:5000"]
         interval: XXX
     depends_on:
       - "XXX"
+
+volumes:
+  redis-vol:
+    external: true

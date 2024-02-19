@@ -1,18 +1,12 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 require_relative 'provisioning/vbox.rb'
-VBoxUtils.check_version('7.0.6')
-Vagrant.require_version ">= 2.3.4"
+VBoxUtils.check_version('7.0.14')
+Vagrant.require_version ">= 2.4.1"
 
-class VagrantPlugins::ProviderVirtualBox::Action::Network
-  def dhcp_server_matches_config?(dhcp_server, config)
-    true
-  end
-end
-
-BOX_NAME = "xxx-aisi2223/focal64"
-MANAGER_HOSTNAME = "xxx-aisi2223-docker"
-WORKER_HOSTNAME = "xxx-aisi2223-docker-worker"
+BOX_NAME = "xxx2324/jammy64"
+MANAGER_HOSTNAME = "xxx2324-docker"
+WORKER_HOSTNAME = "xxx2324-docker-worker"
 
 Vagrant.configure("2") do |config|
   config.vm.box = BOX_NAME
@@ -26,9 +20,8 @@ Vagrant.configure("2") do |config|
   # Manager node
   config.vm.define "manager", primary: true do |manager|
     manager.vm.hostname = MANAGER_HOSTNAME
-    manager.vm.network "private_network", ip: "10.10.1.10", virtualbox__intnet: true
+    manager.vm.network "private_network", ip: "192.168.56.10"
     manager.vm.network "forwarded_port", guest: 80, host: 8080
-    # manager.vm.provision "shell", path: "provisioning/install-docker-compose-ubuntu.sh"
 
     manager.vm.provider "virtualbox" do |prov|
         prov.name = "AISI-P2-#{manager.vm.hostname}"
@@ -41,7 +34,7 @@ Vagrant.configure("2") do |config|
   # Worker node
   config.vm.define "worker" do |worker|
     worker.vm.hostname = WORKER_HOSTNAME
-    worker.vm.network "private_network", ip: "10.10.1.11", virtualbox__intnet: true
+    worker.vm.network "private_network", ip: "192.168.56.11"
     worker.vm.network "forwarded_port", guest: 80, host: 9090
             
     worker.vm.provider "virtualbox" do |prov|
@@ -51,8 +44,4 @@ Vagrant.configure("2") do |config|
 	prov.gui = false
     end
   end
-
-  config.vm.provision "shell", run: "always", inline: <<-SHELL
-	grep -qxF 'export DOCKER_BUILDKIT=0' /home/vagrant/.bashrc || echo 'export DOCKER_BUILDKIT=0' >> /home/vagrant/.bashrc
-  SHELL
 end
