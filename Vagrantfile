@@ -1,12 +1,14 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 require_relative 'provisioning/vbox.rb'
-VBoxUtils.check_version('7.0.14')
-Vagrant.require_version ">= 2.4.1"
+VBoxUtils.check_version('7.1.6')
+Vagrant.require_version ">= 2.4.3"
 
-BOX_NAME = "xxx2324/jammy64"
-MANAGER_HOSTNAME = "xxx2324-docker"
-WORKER_HOSTNAME = "xxx2324-docker-worker"
+STUDEN_PREFIX = "X"
+BOX_NAME = "#{STUDEN_PREFIX}/jammy64"
+# Hostnames for manager and workers
+MANAGER_HOSTNAME = "#{STUDEN_PREFIX}-docker"
+WORKER_HOSTNAME = "#{STUDEN_PREFIX}-docker-worker"
 
 Vagrant.configure("2") do |config|
   config.vm.box = BOX_NAME

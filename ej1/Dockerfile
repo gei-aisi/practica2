@@ -1,18 +1,20 @@
 FROM XXX
 
-# Add missing commands
-RUN apt-get XXX \
-	&& apt-get install XXX \
-	&& wget XXX \
+WORKDIR XXX
+ADD XXX redis.tar.gz
+RUN apt-get update \
 	&& mkdir redis \
-	&& XXX	\
+	&& tar XXX \
+	&& apt-get install -y XXX \
 	&& XXX \
-	&& rm -rf redis \
-	&& XXX
+	&& XXX \
+	&& XXX \
+	&& groupadd XXX \
+	&& useradd XXX \
 
 ENV XXX
 WORKDIR XXX
-RUN XXX
+RUN chown XXX
 USER XXX
 EXPOSE XXX
-ENTRYPOINT XXX
+ENTRYPOINT [XXX]
