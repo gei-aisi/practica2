@@ -10,7 +10,7 @@ RUN apt-get update \
 	&& XXX \
 	&& XXX \
 	&& groupadd XXX \
-	&& useradd XXX \
+	&& useradd XXX
 
 ENV XXX
 WORKDIR XXX
