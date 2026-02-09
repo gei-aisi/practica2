@@ -1,23 +1,23 @@
-FROM XXX as builder
+FROM XXX AS builder
 
 WORKDIR /tmp
 ADD XXX redis.tar.gz
-RUN apt-get update \
+RUN apk add --no-cache build-base linux-headers openssl-dev \
 	&& mkdir redis \
-	&& tar XXX \
-	&& apt-get install -y XXX \
-	&& make	-C redis \
-	&& make	-C redis install
+	&& tar -xzf XXX \
+	&& make -C redis MALLOC=libc \
+	&& make -C redis install
 
 FROM XXX
 
 ENV REDIS_DATA=/data
 WORKDIR	$REDIS_DATA 
-RUN addgroup XXX \
-	&& adduser XXX \
+RUN apk add --no-cache libstdc++ \
+	&& addgroup -S redis -g 990 \
+	&& adduser -S redis -G redis -u 990 \
 	&& chown redis:redis $REDIS_DATA
-USER XXX
-EXPOSE XXX
+USER redis
+EXPOSE 6379/tcp
 COPY XXX
 COPY XXX
-ENTRYPOINT [XXX]
+ENTRYPOINT ["XXX","--protected-mode", "no","--save", "5", "1"]
