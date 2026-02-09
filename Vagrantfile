@@ -32,8 +32,8 @@ Vagrant.configure("2") do |config|
         vb.name = "AISI-P2-#{manager.vm.hostname}"
         vb.cpus = 1
         vb.memory = 1024
-	      vb.gui = false
-	      vb.customize ["modifyvm", :id, "--graphicscontroller", "vmsvga"]
+	vb.gui = false
+	vb.customize ["modifyvm", :id, "--graphicscontroller", "vmsvga"]
     end
   end
   
@@ -45,11 +45,11 @@ Vagrant.configure("2") do |config|
       worker.vm.network "forwarded_port", guest: 80, host: 9090
             
       worker.vm.provider "virtualbox" do |vb|
-	      vb.name = "AISI-P2-#{worker.vm.hostname}"
+	vb.name = "AISI-P2-#{worker.vm.hostname}"
         vb.cpus = 1
         vb.memory = 1024
-	      vb.gui = false
-	      vb.customize ["modifyvm", :id, "--graphicscontroller", "vmsvga"]
+	vb.gui = false
+	vb.customize ["modifyvm", :id, "--graphicscontroller", "vmsvga"]
       end
     end
   end
