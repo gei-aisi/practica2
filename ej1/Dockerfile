@@ -17,4 +17,4 @@ WORKDIR XXX
 RUN chown XXX
 USER XXX
 EXPOSE XXX
-ENTRYPOINT [XXX]
+ENTRYPOINT [XXX, "--protected-mode", "no","--save", "5", "1"]
