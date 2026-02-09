@@ -1,4 +1,4 @@
-FROM python:3.13.1-alpine
+FROM python:3.14.2-alpine
 ENV FLASK_APP=counter.py
 ENV FLASK_RUN_HOST=0.0.0.0
 ENV FLASK_RUN_PORT=5000

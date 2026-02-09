@@ -1,6 +1,8 @@
 import time
 import redis
 import subprocess
+import socket
+import os
 from flask import Flask
 from flask import request
 from markupsafe import Markup
@@ -28,11 +30,31 @@ def get_hit_count():
 
 def get_ip():
     global server_ip
-    sys_cmd = "ip -f inet a show eth0| grep inet| awk '{ print $2}' | cut -d/ -f1"
-    process = subprocess.run(sys_cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    server_ip = process.stdout.decode('utf-8').replace("\n", "")
-    return server_ip
+    try:
+        addr_info = socket.getaddrinfo(socket.gethostname(), None)
+        ips = [info[4][0] for info in addr_info if ":" not in info[4][0]]
+        
+        for ip in ips:
+            if ip.startswith("10.0.1."):
+                server_ip = ip
+                return server_ip
+        
+        for ip in ips:
+            if ip.startswith("10.0.0."):
+                server_ip = ip
+                return server_ip
 
+        for ip in ips:
+            if not ip.startswith("127.") and not ip.startswith("172."):
+                server_ip = ip
+                return server_ip
+        
+        server_ip = ips[0] if ips else "127.0.0.1"
+    except Exception:
+        server_ip = "127.0.0.1"
+    
+    return server_ip
+    
 server_ip = get_ip()
 
 @app.route('/')
@@ -40,6 +62,7 @@ def index():
     global server_ip
     client_ip = request.remote_addr
     counter = get_hit_count()
+    server_hostname = os.uname()[1]
 
     if counter == -1:
         height = '355px'
@@ -51,4 +74,4 @@ def index():
         count = counter
         counter = Markup('<span style="color: green;">{}</span>').format(count)
 
-    return render_template('index.html', redis_host=redis_host, counter=counter, result=result, client_ip=client_ip, server_ip=server_ip)
+    return render_template('index.html', redis_host=redis_host, counter=counter, result=result, client_ip=client_ip, server_ip=server_ip, server_hostname=server_hostname)
