@@ -1,4 +1,4 @@
-FROM XXX AS builder
+FROM XXX as builder
 
 WORKDIR /tmp
 ADD XXX redis.tar.gz
@@ -20,4 +20,4 @@ USER redis
 EXPOSE 6379/tcp
 COPY XXX
 COPY XXX
-ENTRYPOINT ["XXX","--protected-mode", "no","--save", "5", "1"]
+ENTRYPOINT [XXX, "--protected-mode", "no", "--save", "5", "1"]

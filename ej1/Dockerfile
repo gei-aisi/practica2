@@ -2,9 +2,9 @@ FROM XXX
 
 WORKDIR XXX
 ADD XXX redis.tar.gz
-RUN apt-get update \
-	&& mkdir redis \
+RUN mkdir XXX \
 	&& tar XXX \
+	&& apt-get XXX \
 	&& apt-get install -y XXX \
 	&& XXX \
 	&& XXX \
@@ -17,4 +17,4 @@ WORKDIR XXX
 RUN chown XXX
 USER XXX
 EXPOSE XXX
-ENTRYPOINT [XXX, "--protected-mode", "no","--save", "5", "1"]
+ENTRYPOINT [XXX, "--protected-mode", "no", "--save", "5", "1"]
